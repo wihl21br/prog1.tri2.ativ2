@@ -1,0 +1,21 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    > * {
+        flex-grow: 1;
+        border: 2px solid black;
+    }
+}
+body * > :has(label){
+    label{
+        display: flex;
+    }
+    input, text-area {
+        width: 100%;
+        height: 100%;
+    }
+}

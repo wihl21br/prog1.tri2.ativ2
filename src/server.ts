@@ -1,3 +1,4 @@
+                    
 const server = Bun.serve({
     port:3000,
     routes:{
@@ -13,5 +14,4 @@ const server = Bun.serve({
         return new Response('not found', { status:404 })
     }
 })
-
 console.log(`⚡ http://localhost:${server.port}`)
