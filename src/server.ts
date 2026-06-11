@@ -1,7 +1,7 @@
 import TodoList, { Item } from './core'
 const todolist = new TodoList('todolist.json')
 
-async function requetTest(req: Bun.BunRequest) {
+async function requestTest(req: Bun.BunRequest) {
   return Response.json({
     method: req.method,
     time: new Date().toLocaleString('pt-BR'),
@@ -14,12 +14,12 @@ const server = Bun.serve({
   routes: {
     '/api-debugger': (req) => new Response(Bun.file('./public/api-debugger.html')),
     '/test': {
-      GET: requetTest,
-      POST: requetTest,
-      PUT: requetTest,
-      DELETE: requetTest,
-      PATCH: requetTest,
-      OPTIONS: requetTest,
+      GET: requestTest,
+      POST: requestTest,
+      PUT: requestTest,
+      DELETE: requestTest,
+      PATCH: requestTest,
+      OPTIONS: requestTest,
     },
     '/todo': {
         GET: async () => {
