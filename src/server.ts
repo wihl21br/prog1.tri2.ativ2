@@ -12,7 +12,11 @@ async function requestTest(req: Bun.BunRequest) {
 const server = Bun.serve({
   port: 3000,
   routes: {
+    '/': () => new Response(Bun.file('./public/index.html')),
+    
     '/api-debugger': (req) => new Response(Bun.file('./public/api-debugger.html')),
+
+
     '/test': {
       GET: requestTest,
       POST: requestTest,
@@ -47,7 +51,13 @@ const server = Bun.serve({
             return new Response('Created', { status: 201 })
         }
     },
-    '/todo/:index': async (req) => {
+
+    '/todo/:index':{
+        GET: () => {
+            return new Response("Not Implemented yet ", { status: 501 })
+        }
+        ,
+        DELETE : async (req) => {
         const indexStr = req.params.index
         const index = parseInt(indexStr)
         if (isNaN(index)) 
@@ -55,6 +65,7 @@ const server = Bun.serve({
         await todolist.removeItem(index)
         return new Response(`Item de indice ${index}, removido com sucesso`)
     } 
+}
   },
   fetch(req) {
     return new Response("Not Found", { status: 404 });

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>To-Do</title>
+    <script type="module">
+        const form = document.querySelector('#add')
+        //const itemTemplate = document.querySelector("#itemTemplate") 
+
+        function createElemntItem(elIndex, elTitle) {
+            const clone = itemTemplate.content.cloneNode(true)
+            const title = clone.querySelector('span')
+            const delButton = clone.querySelector('button')
+            console.log(title)
+            title.innerText = elTitle
+            title.dataset.id = elIndex // abre brecha pra um HACKER danado!
+            itemTemplate.parentElement.append()
+        }
+
+        createElemntItem()
+
+        void async function () {
+            const response = await fetch("/todo")
+            const items = await response.json()
+            items.forEach(( item, index) => createElemntItem(index, items.title));
+            console.log(items)
+        }();
+
+        form.addEventListener("submit", async (ev) => {
+            ev.preventDefault()
+            form.fieldset.setAttribute("disabled", true)
+            const title = form.title.value 
+            if (!title.trim() === '' ) 
+                return
+
+            const response = await fetch("/todo", {
+                method: "POST",
+                headers: { "content-type": "aplication/json"},
+                body: JSON.stringify({title})
+            })
+            const item = await response.JSON
+            console.log(item)
+            createElemntItem(-1, title)
+            form.title.value = ""
+            
+            
+        })
+    </script>
+    <link rel='stylesheet' href=''>
+</head>
+
+<body>
+    <form id="add" >
+        <fieldset disabled>
+            <input name="title">
+            <button>add</button>
+        </fieldset>
+    </form>
+    <ul>
+        <template id="itemTemplate">
+            <li id="">
+                <span>...</span>
+                <button id="">del</button>
+            </li>
+        </template>
+    </ul>
+</body>
+
+</html>
